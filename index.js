@@ -7,8 +7,8 @@ import yup from 'yup';
 const app = express();
 const port = process.env.PORT || 5000;
 
-// import dotenv from 'dotenv';
-// dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const db = monk(process.env.MONGODB_URL);
 const urlList = db.get('all_urls');
@@ -50,7 +50,9 @@ app.post('/shorten', async (req, res) => {
 		// Check database to see if code is already there
 		const exists = await urlList.findOne({ code });
 		if (exists) {
-			res.status(400).json({ error: 'code already exists' });
+			res.status(400).json({
+				error: `Error: code already redirects to ${exists.url}`,
+			});
 		} else {
 			const newUrl = {
 				url,
@@ -60,7 +62,9 @@ app.post('/shorten', async (req, res) => {
 			res.json(created);
 		}
 	} catch (error) {
-		res.status(400).json({ error: 'link invalid' });
+		res.status(400).json({
+			error: 'Error: link invalid (It must begin with http:// or https://)',
+		});
 	}
 });
 

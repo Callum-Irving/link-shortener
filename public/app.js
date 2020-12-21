@@ -27,6 +27,7 @@ var app = new Vue({
 			} else {
 				const response = await shortenedUrl.json();
 				this.errorMsg = response.error;
+				console.log(response);
 			}
 		},
 	},
