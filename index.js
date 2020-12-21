@@ -7,8 +7,8 @@ import yup from 'yup';
 const app = express();
 const port = process.env.PORT || 5000;
 
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 const db = monk(process.env.MONGODB_URL);
 const urlList = db.get('all_urls');
